@@ -5,7 +5,7 @@ Google Colab is essentially a VM Ubuntu 18.04 machine that people with a google-
 
 I have made a notebook that set-up PyFMI 2.7.4 and needed libraries and run a small example with microbial batch cultivation. The model is an example taken from Bioprocess Library and the example is available as an FMU. You can interact with it through a simplified command-line interface using: newplot(), par(), inut(), simuI() etc. More about the command-line interface you find here 
 [FMU-explore](https://openmodelica.org/events/openmodelica-workshop/openmodelica-program-2022-a)
-and is a layer on top of PyFMI.
+and is a layer on top of [PyFMI](https://github.com/modelon-community/PyFMI).
 
 Below script and diagram with two simulations of batch growth with different initial substrate level that you will get at the end of the notebook.
 
