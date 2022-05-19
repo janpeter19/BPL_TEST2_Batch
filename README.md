@@ -11,3 +11,5 @@ command-line interface using: newplot(), par(), inut(), simuI() etc. More about 
 Below a diagram with two simulations of batch growth with different initial substrate level that you will get at the end of the notebook.
 
 ![](Fig1_BPL_TEST2_Batch_VS_0_varied.png)
+
+You start up the notebook in Colab by pressing here.  Remember, you need to have a google-account.
