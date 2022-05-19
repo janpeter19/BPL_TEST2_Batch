@@ -10,4 +10,4 @@ command-line interface using: newplot(), par(), inut(), simuI() etc. More about 
 
 Below a diagram with two simulations of batch growth with different initial substrate level that you will get at the end of the notebook.
 
-![](FIG1_BPL_TEST2_Batch_VS_0_varied.png)
+![](Fig1_BPL_TEST2_Batch_VS_0_varied.png)
