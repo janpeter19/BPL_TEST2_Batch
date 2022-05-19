@@ -9,3 +9,5 @@ The model is an example taken from Bioprocess Library and the example is availab
 command-line interface using: newplot(), par(), inut(), simuI() etc. More about the command-line interface you finde here...
 
 Below a diagram with two simulations of batch growth with different initial substrate level that you will get at the end of the notebook.
+
+![](br13_batch.png)
