@@ -11,6 +11,6 @@ Below a diagram with two simulations of batch growth with different initial subs
 ![](Fig1_BPL_TEST2_Batch_VS_0_varied.png)
 
 You start up the notebook in Colab by pressing here
-[start BPL notebook](https://colab.research.google.com/github/github/janpeter19/BPL_TEST2_Batch/BPL_TEST2_Batch_with_pyfmi_274).
+[start BPL notebook](https://colab.research.google.com/github/janpeter19/BPL_TEST2_Batch/BPL_TEST2_Batch_with_pyfmi_274.ipynb).
 
 Remember, you need to have a google-account.
