@@ -21,3 +21,5 @@ Note that:
 * The script occassionaly get stuck during installation. Then just close the notebook and start from scratch.
 * After a simulation there is warning for that the type float is depracated. The warning is due to the fact that we need to run in an older combination of Python and the key library PyFMI. This is corrected in later versions. The warnings are now filtered out.
 * Remember, you need to have a google-account!
+
+Just to be clear, no installation is done at your local computer.
