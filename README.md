@@ -12,7 +12,7 @@ Below script and diagram with two simulations of batch growth with different ini
 ![](Fig1_BPL_TEST2_Batch_VS_0_varied.png)
 
 You start up the notebook in Colab by pressing here
-[start BPL notebook](https://colab.research.google.com/github/janpeter19/BPL_TEST2_Batch/blob/main/BPL_TEST2_Batch_with_PyFMI_274_py_3713_v5.ipynb).
+[start BPL notebook](https://colab.research.google.com/github/janpeter19/BPL_TEST2_Batch/blob/main/BPL_TEST2_Batch_with_PyFMI_274_3713_v5.ipynb).
 Then you in the menu choose Runtime/Run all.
 
 The installation takes just a few minutes. The subsequent execution of the simulations of microbial growth take just a second or so. You can continue in the notebook and make new simulations and follow the examples given.
