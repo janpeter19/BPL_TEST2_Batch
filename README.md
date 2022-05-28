@@ -7,7 +7,7 @@ I have made a notebook that set-up PyFMI 2.7.4 and needed libraries and run a sm
 [FMU-explore](https://openmodelica.org/events/openmodelica-workshop/openmodelica-program-2022-a)
 and is a layer on top of [PyFMI](https://github.com/modelon-community/PyFMI).
 
-Below script and diagram with two simulations of batch growth with different initial substrate level that you will get at the end of the notebook.
+Below script and diagram with three simulations of batch growth with different initial substrate level that you will get at the end of the notebook.
 
 ![](Fig1_BPL_TEST2_Batch_VS_0_varied.png)
 
