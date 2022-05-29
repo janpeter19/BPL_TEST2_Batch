@@ -46,8 +46,7 @@
 # 2022-02-01 - Updated to FMU-explore 0.8.9
 # 2022-03-26 - Updated to FMU-explore 0.9.0 - model.reset(), and par(), init()
 # 2022-04-29 - Updated to FMU-explore 0.9.1 
-# 2022-04-30 - Introduced in newplot() TimeSeries2 adapted for Widgets
-# 2022-05-14 - Introduced TimeSeries3 made for use with widget interact_manual
+# 2022-05-28 - Introduce variable mu in parLocation for use in describe() but also disp()
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -130,6 +129,9 @@ parLocation['Y'] = 'bioreactor.culture.Y'
 parLocation['qSmax'] = 'bioreactor.culture.qSmax'
 parLocation['Ks'] = 'bioreactor.culture.Ks'
 
+# Extra only for describe()
+parLocation['mu'] = 'bioreactor.culture.mu'
+
 # Create list of diagrams to be plotted by simu()
 global diagrams
 diagrams = []
@@ -144,13 +146,12 @@ def newplot(title='Batch cultivation', plotType='TimeSeries'):
     
    # Reset pens
    setLines()
-
-   # Transfer of global axes to simu()      
-   global ax, ax1, ax2      
- 
+    
    # Plot diagram 
    if plotType == 'TimeSeries':
 
+      # Transfer of global axes to simu()      
+      global ax1, ax2      
    
       plt.figure()
       ax1 = plt.subplot(2,1,1)
@@ -171,47 +172,10 @@ def newplot(title='Batch cultivation', plotType='TimeSeries'):
       diagrams.append("ax1.legend(['X','S'])")   
       diagrams.append("ax2.plot(t,sim_res['bioreactor.culture.q[1]'],color='r',linestyle=linetype)")   
 
-   elif plotType == 'TimeSeries2':
-
-      plt.figure()
-      ax1 = plt.subplot(2,1,1)
-      ax2 = plt.subplot(2,1,2)
-    
-#      ax1.set_title(title)
-      
-      # List of commands to be executed by simu() after a simulation  
-      diagrams.clear()
-      diagrams.append("ax1.grid()")
-      diagrams.append("ax1.set_ylabel('X and S [g/L]')")
-      diagrams.append("ax2.grid()")  
-      diagrams.append("ax2.set_ylabel('mu [1/h]')")
-      diagrams.append("ax2.set_xlabel('Time [h]')")    
-      diagrams.append("ax1.plot(t,sim_res['bioreactor.c[1]'],color='r',linestyle=linetype)")
-      diagrams.append("ax1.plot(t,sim_res['bioreactor.c[2]'],color='b',linestyle=linetype)")   
-      diagrams.append("ax1.legend(['X','S'])")   
-      diagrams.append("ax2.plot(t,sim_res['bioreactor.culture.q[1]'],color='r',linestyle=linetype)")   
-
-   elif plotType == 'TimeSeries3':
-
-      plt.figure()
-      ax1 = plt.subplot(2,1,1)
-      ax2 = plt.subplot(2,1,2)
-    
-#      ax1.set_title(title)
-      
-      # List of commands to be executed by simu() after a simulation  
-      diagrams.clear()
-#      diagrams.append("ax1.grid()")
-      diagrams.append("ax1.set_ylabel('X and S [g/L]')")
-#      diagrams.append("ax2.grid()")  
-      diagrams.append("ax2.set_ylabel('mu [1/h]')")
-      diagrams.append("ax2.set_xlabel('Time [h]')")    
-      diagrams.append("ax1.plot(t,sim_res['bioreactor.c[1]'],color='r',linestyle=linetype)")
-      diagrams.append("ax1.plot(t,sim_res['bioreactor.c[2]'],color='b',linestyle=linetype)")   
-      diagrams.append("ax1.legend(['X','S'])")   
-      diagrams.append("ax2.plot(t,sim_res['bioreactor.culture.q[1]'],color='r',linestyle=linetype)")   
-
    elif plotType == 'PhasePlane':
+
+      # Transfer of global axes to simu()      
+      global ax      
        
       plt.figure()
       ax = plt.subplot(1,1,1)
