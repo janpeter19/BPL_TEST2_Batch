@@ -1,3 +1,5 @@
 
 .DS_Store
 BPL_TEST2_Batch_windows_jm_cs.fmu
+*.txt
+*.mat
