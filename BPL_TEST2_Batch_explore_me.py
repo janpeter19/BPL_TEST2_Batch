@@ -93,7 +93,7 @@ elif platform.system() == 'Linux':
 #   flag_vendor = input('Linux - run FMU from JModelica (JM) or OpenModelica (OM)?')  
 #   flag_type = input('Linux - run FMU-CS (CS) or ME (ME)?')  
 #   print()   
-   flag_vemdor = 'OM'
+   flag_vendor = 'OM'
    flag_type = 'ME'
    if flag_vendor in ['','JM','jm']:    
       print('Linux - run FMU pre-compiled JModelica 2.4')
