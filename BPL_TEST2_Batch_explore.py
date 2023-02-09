@@ -50,7 +50,7 @@
 # 2022-04-29 - Updated to FMU-explore 0.9.1 
 # 2022-05-28 - Introduce variable mu in parLocation for use in describe() but also disp()
 # 2022-10-17 - Updated for FMU-explore 0.9.5 with disp() that do not include extra parameters with parLocation
-# 2023-02-08 - Updated to FMU-explore 0.9.6e
+# 2023-02-09 - Updated to FMU-explore 0.9.6e
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -88,6 +88,11 @@ if platform.system() == 'Windows':
    model = load_fmu(fmu_model, log_level=0)
    opts = model.simulate_options()
    opts['silent_mode'] = True
+   flag_vendor = 'JM'
+   flag_type = 'CS'
+   MSL_usage = model.get('MSL.usage')[0]
+   MSL_version = model.get('MSL.version')[0]
+   BPL_version = model.get('BPL.version')[0]
 elif platform.system() == 'Linux':
 #   flag_vendor = input('Linux - run FMU from JModelica (JM) or OpenModelica (OM)?')  
 #   flag_type = input('Linux - run FMU-CS (CS) or ME (ME)?')  
