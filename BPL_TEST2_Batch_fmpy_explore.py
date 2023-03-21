@@ -20,6 +20,7 @@
 # 2023-02-28 - Place the list key_variables better
 # 2023-03-09 - Prepare for Google Colab use
 # 2023-03-18 - Adapt further for FMPy use
+# 2023-03-20 - Finalize simu(mode='cont')
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -301,7 +302,7 @@ def describe(name, decimals=3):
       
 #------------------------------------------------------------------------------------------------------------------
 #  General code 
-FMU_explore = 'FMU-explore for FMPy version 0.9.7a'
+FMU_explore = 'FMU-explore for FMPy version 0.9.7b'
 #------------------------------------------------------------------------------------------------------------------
 
 # Define function par() for parameter update
@@ -425,7 +426,7 @@ def show(diagrams=diagrams):
 
 # Define simulation
 def simu(simulationTime=simulationTime, mode='Initial', diagrams=diagrams, output_interval=None):
-   global sim_res, prevFinalTime, stateDict
+   global sim_res, prevFinalTime, stateDict, stateDictInitial, stateDictInitialLoc
    
    def extract_variables(diagrams):
        output = []
@@ -454,26 +455,23 @@ def simu(simulationTime=simulationTime, mode='Initial', diagrams=diagrams, outpu
       
    elif mode in ['Continued', 'continued', 'cont']:
       
-      # Create stateDictInitial and parDictRed, parLocationRed - code moved outside later
-      stateDictInitial = {'bioreactor.V':'bioreactor.V_0', 
-                          'bioreactor.m[1]':'bioreactor.m_0[1]',
-                          'bioreactor.m[2]':'bioreactor.m_0[2]'}  
-      stateDictInitialLoc = {'bioreactor.V_0':'bioreactor.V_0',
-                             'bioreactor.m_0[1]':'bioreactor.m_0[1]',
-                             'bioreactor.m_0[2]':'bioreactor.m_0[2]'}
-      parDictRed = parDict.copy()
-      parLocationRed = parLocation.copy()
-      for key in parDict.keys():
-         if parLocation[key] in stateDictInitial.values(): 
-            del parDictRed[key]  
-            del parLocationRed[key]
-      parLocationMod = dict(list(parLocationRed.items()) + list(stateDictInitialLoc.items()))
+      # Update parDictMod and create parLocationMod
+      try:
+         parDictRed = parDict.copy()
+         parLocationRed = parLocation.copy()
+         for key in parDict.keys():
+            if parLocation[key] in stateDictInitial.values(): 
+               del parDictRed[key]  
+               del parLocationRed[key]
+         parLocationMod = dict(list(parLocationRed.items()) + list(stateDictInitialLoc.items()))
       
-      # Create parDictMod and parLocationMod
-      parDictMod = dict(list(parDictRed.items()) + 
-         [(stateDictInitial[key], stateDict[key]) for key in stateDict.keys()])      
-      
-
+         # Create parDictMod and parLocationMod
+         parDictMod = dict(list(parDictRed.items()) + 
+            [(stateDictInitial[key], stateDict[key]) for key in stateDict.keys()])      
+      except NameError:
+         print("Simulation is first done with default mode='init'")
+         prevFinalTime = 0
+  
       # Simulate
       sim_res = simulate_fmu(
          filename = fmu_model,
@@ -487,7 +485,6 @@ def simu(simulationTime=simulationTime, mode='Initial', diagrams=diagrams, outpu
          output = list(set(extract_variables(diagrams) + key_variables))
       )
 
-
    else:
       print("Error: simulation mode not correct")
 
@@ -495,14 +492,43 @@ def simu(simulationTime=simulationTime, mode='Initial', diagrams=diagrams, outpu
    linetype = next(linecycler)    
    for command in diagrams: eval(command)
    
-   # Store final state values in stateDict:   
+   # Create once dictionaries related to handling the initial states
    try: stateDict
    except NameError:
+      # Creeate stateDict firt time
       continuous_states = []
       for variable in model_description.modelVariables:
          if variable.derivative is not None: 
             continuous_states.append(variable.derivative.name)
-      stateDict = {key:None for key in continuous_states}     
+      stateDict = {key:None for key in continuous_states}  
+      stateDict.update(timeDiscreteStates)  
+      
+      # Create stateDictInitial first time
+      stateDictInitial = {}
+      for key in stateDict.keys():
+          if not key[-1] == ']':
+               if key[-3:] == 'I.y':
+                  stateDictInitial[key] = key[:-10]+'I_0'
+               elif key[-3:] == 'D.x':
+                  stateDictInitial[key] = key[:-10]+'D_0'
+               else:
+                  stateDictInitial[key] = key+'_0'
+          elif key[-3] == '[':
+              stateDictInitial[key] = key[:-3]+'_0'+key[-3:]
+          elif key[-4] == '[':
+              stateDictInitial[key] = key[:-4]+'_0'+key[-4:]
+          elif key[-5] == '[':
+              stateDictInitial[key] = key[:-5]+'_0'+key[-5:] 
+          else:
+              print('The state vector has more than 1000 states')
+              break
+      
+      # Create stateDictInitialLoc first time
+      stateDictInitialLoc = {}
+      for value in stateDictInitial.values():
+          stateDictInitialLoc[value] = value
+      
+   # Store final state values in stateDict:        
    for key in list(stateDict.keys()):
       stateDict[key] = model_get(key)  
          

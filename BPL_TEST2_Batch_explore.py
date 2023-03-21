@@ -97,7 +97,7 @@ elif platform.system() == 'Linux':
          fmu_model ='BPL_TEST2_Batch_linux_om_cs.fmu'    
          model = load_fmu(fmu_model, log_level=0) 
       if flag_type in ['ME','me']:         
-         fmu_model ='xBPL_TEST2_Batch_linux_om_me.fmu'    
+         fmu_model ='BPL_TEST2_Batch_linux_om_me.fmu'    
          model = load_fmu(fmu_model, log_level=0)
    else:    
       print('There is no FMU for this platform')
@@ -406,7 +406,7 @@ def simu(simulationTimeLocal=simulationTime, mode='Initial', options=opts_std, \
             elif key[-5] == '[':
                model.set(key[:-5]+'_0'+key[-5:], stateDict[key]) 
             else:
-               print('The state vecotr has more than 1000 states')
+               print('The state vector has more than 1000 states')
                break
       except NameError:
          print("Simulation is first done with default mode='init'")
