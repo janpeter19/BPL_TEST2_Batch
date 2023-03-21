@@ -15,7 +15,7 @@ You start up the notebook in Colab by pressing here
 [start BPL notebook](https://colab.research.google.com/github/janpeter19/BPL_TEST2_Batch/blob/main/BPL_TEST2_Batch_colab.ipynb)
 or alternatively (experimentally)
 [start BPL notebook with FMPy](https://github.com/janpeter19/BPL_TEST2_Batch/blob/main/BPL_TEST2_Batch_fmpy_colab.ipynb).
-Then you in the menu choose Runtime/Run all.
+Then you in the menu choose Runtime/Run all. If you have chosen the altarnative with FMPy click first on Open in Colab first.
 
 The installation takes just a few minutes. The subsequent execution of the simulations of microbial growth take just a second or so. You can continue in the notebook and make new simulations and follow the examples given.
 
