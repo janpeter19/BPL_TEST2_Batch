@@ -21,6 +21,7 @@
 # 2023-03-09 - Prepare for Google Colab use
 # 2023-03-18 - Adapt further for FMPy use
 # 2023-03-20 - Finalize simu(mode='cont')
+# 2023-03-21 - Clean-up
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -61,7 +62,7 @@ if platform.system() == 'Windows':
    flag_type = 'CS'
 elif platform.system() == 'Linux':
    print('Linux - run FMU pre-compiled OpenModelica 1.21.x')
-   fmu_model ='xBPL_TEST2_Batch_linux_om_me.fmu'  
+   fmu_model ='BPL_TEST2_Batch_linux_om_me.fmu'  
    model_description = read_model_description(fmu_model)  
    flag_vendor = 'OM' 
    flag_type = 'ME'
