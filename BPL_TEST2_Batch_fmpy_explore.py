@@ -481,6 +481,8 @@ def simu(simulationTime=simulationTime, mode='Initial', diagrams=diagrams, outpu
          print("Simulation is first done with default mode='init'")
          prevFinalTime = 0
   
+      start_values = {parLocationMod[k]:parDictMod[k] for k in parDictMod.keys()}
+  
       # Simulate
       sim_res = simulate_fmu(
          filename = fmu_model,
@@ -489,7 +491,7 @@ def simu(simulationTime=simulationTime, mode='Initial', diagrams=diagrams, outpu
          stop_time = prevFinalTime + simulationTime,
          output_interval = output_interval,
          record_events = True,
-         start_values = {parLocationMod[k]:parDictMod[k] for k in parDictMod.keys()},
+         start_values = start_values,
          fmi_call_logger = None,
          output = list(set(extract_variables(diagrams) + key_variables))
       )
