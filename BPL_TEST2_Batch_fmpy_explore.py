@@ -301,10 +301,9 @@ def describe(name, decimals=3):
 
    else:
       describe_general(name, decimals)
-      
 #------------------------------------------------------------------------------------------------------------------
 #  General code 
-FMU_explore = 'FMU-explore for FMPy version 0.9.7b'
+FMU_explore = 'FMU-explore for FMPy version 0.9.7c'
 #------------------------------------------------------------------------------------------------------------------
 
 # Define function par() for parameter update
@@ -343,16 +342,22 @@ def model_get(parLoc, model_description=model_description):
    par_var = model_description.modelVariables
    for k in range(len(par_var)):
       if par_var[k].name == parLoc:
-         if par_var[k].variability in ['constant', 'fixed']:        
-            value = float(par_var[k].start)        
-         elif par_var[k].variability == 'continuous':
-            try:
-               timeSeries = sim_res[par_var[k].name]
-               value = timeSeries[-1]
-            except (AttributeError, ValueError):
+         try:
+            if par_var[k].name in start_values.keys():
+                  value = start_values[par_var[k].name]
+            elif par_var[k].variability in ['constant', 'fixed']:        
+                  value = float(par_var[k].start)     
+            elif par_var[k].variability == 'continuous':
+               try:
+                  timeSeries = sim_res[par_var[k].name]
+                  value = timeSeries[-1]
+               except (AttributeError, ValueError):
+                  value = None
+                  print('Variable not logged')
+            else:
                value = None
-               print('Variable not logged')
-         else:
+         except NameError:
+            print('Error: Information available after first simution')
             value = None
    return value
 
@@ -428,7 +433,7 @@ def show(diagrams=diagrams):
 
 # Define simulation
 def simu(simulationTime=simulationTime, mode='Initial', diagrams=diagrams, output_interval=None):
-   global sim_res, prevFinalTime, stateDict, stateDictInitial, stateDictInitialLoc
+   global sim_res, prevFinalTime, stateDict, stateDictInitial, stateDictInitialLoc, start_values
    
    def extract_variables(diagrams):
        output = []
@@ -442,6 +447,8 @@ def simu(simulationTime=simulationTime, mode='Initial', diagrams=diagrams, outpu
    # Run simulation
    if mode in ['Initial', 'initial', 'init']: 
       
+      start_values = {parLocation[k]:parDict[k] for k in parDict.keys()}
+      
       # Simulate
       sim_res = simulate_fmu(
          filename = fmu_model,
@@ -450,7 +457,7 @@ def simu(simulationTime=simulationTime, mode='Initial', diagrams=diagrams, outpu
          stop_time = simulationTime,
          output_interval = output_interval,
          record_events = True,
-         start_values = {parLocation[k]:parDict[k] for k in parDict.keys()},
+         start_values = start_values,
          fmi_call_logger = None,
          output = list(set(extract_variables(diagrams) + key_variables))
       )
@@ -654,7 +661,7 @@ def system_info():
    print(' -MSL:', MSL_version)    
    print(' -Description:', BPL_version)   
    print(' -Interaction:', FMU_explore)
-
+   
 #------------------------------------------------------------------------------------------------------------------
 #  Startup
 #------------------------------------------------------------------------------------------------------------------
