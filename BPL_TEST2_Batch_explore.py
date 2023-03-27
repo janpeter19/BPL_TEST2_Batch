@@ -53,7 +53,7 @@
 # 2023-02-09 - Updated to FMU-explore 0.9.6e
 # 2023-02-13 - Consolidate FMU-explore to 0.9.6 and means parCheck and par() udpate and simu() with opts as arg
 # 2023-02-24 - Corrected MSL-suage information for OpenModelica Linux
-# 2023-03-27 - Update to FMU-explore 0.9.7 mature version
+# 2023-03-27 - Update to FMU-explore 0.9.7 for PyFMI mature version
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
