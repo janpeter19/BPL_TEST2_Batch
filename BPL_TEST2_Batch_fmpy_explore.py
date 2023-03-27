@@ -122,6 +122,29 @@ stateDict = {variable.derivative.name:None for variable in model_description.mod
                                             if variable.derivative is not None}
 stateDict.update(timeDiscreteStates) 
 
+global stateDictInitial; stateDictInitial = {}
+for key in stateDict.keys():
+    if not key[-1] == ']':
+         if key[-3:] == 'I.y':
+            stateDictInitial[key] = key[:-10]+'I_0'
+         elif key[-3:] == 'D.x':
+            stateDictInitial[key] = key[:-10]+'D_0'
+         else:
+            stateDictInitial[key] = key+'_0'
+    elif key[-3] == '[':
+        stateDictInitial[key] = key[:-3]+'_0'+key[-3:]
+    elif key[-4] == '[':
+        stateDictInitial[key] = key[:-4]+'_0'+key[-4:]
+    elif key[-5] == '[':
+        stateDictInitial[key] = key[:-5]+'_0'+key[-5:] 
+    else:
+        print('The state vector has more than 1000 states')
+        break
+
+global stateDictInitialLoc; stateDictInitialLoc = {}
+for value in stateDictInitial.values():
+    stateDictInitialLoc[value] = value
+
 # Create dictionaries parDict[] and parLocation[]
 global parDict; parDict = {}
 parDict['V_0'] = 1.0
@@ -304,7 +327,7 @@ def describe(name, decimals=3):
       describe_general(name, decimals)
 #------------------------------------------------------------------------------------------------------------------
 #  General code 
-FMU_explore = 'FMU-explore for FMPy version 0.9.7d'
+FMU_explore = 'FMU-explore for FMPy version 0.9.7'
 #------------------------------------------------------------------------------------------------------------------
 
 # Define function par() for parameter update
@@ -471,26 +494,21 @@ def simu(simulationTime=simulationTime, mode='Initial', diagrams=diagrams, outpu
       
       if prevFinalTime == 0: 
          print("Error: Simulation is first done with default mode = init'")
+         
       else:         
          # Update parDictMod and create parLocationMod
-         try:
-            parDictRed = parDict.copy()
-            parLocationRed = parLocation.copy()
-            for key in parDict.keys():
-               if parLocation[key] in stateDictInitial.values(): 
-                  del parDictRed[key]  
-                  del parLocationRed[key]
-            parLocationMod = dict(list(parLocationRed.items()) + list(stateDictInitialLoc.items()))
-      
-            # Create parDictMod and parLocationMod
-            parDictMod = dict(list(parDictRed.items()) + 
-               [(stateDictInitial[key], stateDict[key]) for key in stateDict.keys()])      
-         except NameError:
-            print("Simulation is first done with default mode='init'")
-            prevFinalTime = 0
-         
-         if prevFinalTime == 0: print("Error: Simulation is first done with default mode = init'")
+         parDictRed = parDict.copy()
+         parLocationRed = parLocation.copy()
+         for key in parDict.keys():
+            if parLocation[key] in stateDictInitial.values(): 
+               del parDictRed[key]  
+               del parLocationRed[key]
+         parLocationMod = dict(list(parLocationRed.items()) + list(stateDictInitialLoc.items()))
    
+         # Create parDictMod and parLocationMod
+         parDictMod = dict(list(parDictRed.items()) + 
+            [(stateDictInitial[key], stateDict[key]) for key in stateDict.keys()])      
+
          start_values = {parLocationMod[k]:parDictMod[k] for k in parDictMod.keys()}
   
          # Simulate
