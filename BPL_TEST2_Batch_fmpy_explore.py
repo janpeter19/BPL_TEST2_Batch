@@ -71,9 +71,9 @@ else:
 
 # Provide various opts-profiles
 if flag_type in ['CS', 'cs']:
-   opts_std = {'NCP': 500}
+   opts_std = {'ncp': 500}
 elif flag_type in ['ME', 'me']:
-   opts_std = {'NCP': 500}
+   opts_std = {'ncp': 500}
 else:    
    print('There is no FMU for this platform')
 
@@ -481,7 +481,7 @@ def simu(simulationTime=simulationTime, mode='Initial', options=opts_std, diagra
          validate = False,
          start_time = 0,
          stop_time = simulationTime,
-         output_interval = simulationTime/options['NCP'],
+         output_interval = simulationTime/options['ncp'],
          record_events = True,
          start_values = start_values,
          fmi_call_logger = None,
@@ -517,7 +517,7 @@ def simu(simulationTime=simulationTime, mode='Initial', options=opts_std, diagra
             validate = False,
             start_time = prevFinalTime,
             stop_time = prevFinalTime + simulationTime,
-            output_interval = simulationTime/options['NCP'],
+            output_interval = simulationTime/options['ncp'],
             record_events = True,
             start_values = start_values,
             fmi_call_logger = None,
