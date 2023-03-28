@@ -23,7 +23,8 @@
 # 2023-03-20 - Finalize simu(mode='cont')
 # 2023-03-21 - Clean-up
 # 2023-03-23 - Update FMU-explore 0.9.7c
-# 2023-03-27 - Update FMU-explore 0.9.7 and now amture version
+# 2023-03-27 - Update FMU-explore 0.9.7 and now mature version
+# 2023-03-28 - Compliance of options and simu()
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -69,18 +70,12 @@ else:
    print('There is no FMU for this platform')
 
 # Provide various opts-profiles
-#if flag_type in ['CS', 'cs']:
-#   opts_std = model.simulate_options()
-#   opts_std['silent_mode'] = True
-#   opts_std['ncp'] = 500 
-#   opts_std['result_handling'] = 'binary'     
-#elif flag_type in ['ME', 'me']:
-#   opts_std = model.simulate_options()
-#   opts_std["CVode_options"]["verbosity"] = 50 
-#   opts_std['ncp'] = 500 
-#   opts_std['result_handling'] = 'binary'  
-#else:    
-#   print('There is no FMU for this platform')
+if flag_type in ['CS', 'cs']:
+   opts_std = {'NCP': 500}
+elif flag_type in ['ME', 'me']:
+   opts_std = {'NCP': 500}
+else:    
+   print('There is no FMU for this platform')
 
 # Extract model_description from fmu_model
 model_description = read_model_description(fmu_model)
@@ -456,11 +451,16 @@ def show(diagrams=diagrams):
    for command in diagrams: eval(command)
 
 # Define simulation
-def simu(simulationTime=simulationTime, mode='Initial', diagrams=diagrams, output_interval=None):
+def simu(simulationTime=simulationTime, mode='Initial', options=opts_std, diagrams=diagrams):
+   """Model loaded and given intial values and parameter before, and plot window also setup before."""   
+   
+   # Global variables
    global sim_res, prevFinalTime, stateDict, stateDictInitial, stateDictInitialLoc, start_values
    
+   # Simulation flag
    simulationDone = False
    
+   # Internal help function to extract variables to be stored
    def extract_variables(diagrams):
        output = []
        variables = [v for v in model_description.modelVariables if v.causality == 'local']
@@ -481,7 +481,7 @@ def simu(simulationTime=simulationTime, mode='Initial', diagrams=diagrams, outpu
          validate = False,
          start_time = 0,
          stop_time = simulationTime,
-         output_interval = output_interval,
+         output_interval = simulationTime/options['NCP'],
          record_events = True,
          start_values = start_values,
          fmi_call_logger = None,
@@ -517,7 +517,7 @@ def simu(simulationTime=simulationTime, mode='Initial', diagrams=diagrams, outpu
             validate = False,
             start_time = prevFinalTime,
             stop_time = prevFinalTime + simulationTime,
-            output_interval = output_interval,
+            output_interval = simulationTime/options['NCP'],
             record_events = True,
             start_values = start_values,
             fmi_call_logger = None,
