@@ -54,6 +54,7 @@
 # 2023-02-13 - Consolidate FMU-explore to 0.9.6 and means parCheck and par() udpate and simu() with opts as arg
 # 2023-02-24 - Corrected MSL-suage information for OpenModelica Linux
 # 2023-03-27 - Update to FMU-explore 0.9.7 for PyFMI mature version
+# 2023-04-19 - Compiled for Ubuntu 20.04 and changed BPL_version
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -125,7 +126,7 @@ if flag_vendor in ['JM', 'jm']:
 elif flag_vendor in ['OM', 'om']:
    MSL_usage = '3.2.3 - used components: none' 
    MSL_version = '3.2.3'
-   BPL_version = 'Bioprocess Library version 2.1.1-beta' 
+   BPL_version = 'Bioprocess Library version 2.1.1' 
 else:    
    print('There is no FMU for this platform')
    
