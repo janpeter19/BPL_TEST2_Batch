@@ -1,9 +1,7 @@
 # Figure - Simulation of batch reactor 
-#          with a set of functions and global variables added to facilitate explorative simulation work.
-#          The general part of this code is called FMU-explore and is planned to be avaialbe as a separate package.
+#          with functions added to facilitate explorative simulation work
 #
-# GNU General Public License v3.0
-# Copyright (c) 2022, Jan Peter Axelsson, All rights reserved.
+# Author: Jan Peter Axelsson
 #------------------------------------------------------------------------------------------------------------------
 # 2020-01-30 - Adpated to Python 3 and tested using Docker-Ubuntu FMU
 #            - Introduced locale and setting of it - important for OpenModelica
@@ -49,14 +47,17 @@
 # 2022-03-26 - Updated to FMU-explore 0.9.0 - model.reset(), and par(), init()
 # 2022-04-29 - Updated to FMU-explore 0.9.1 
 # 2022-05-28 - Introduce variable mu in parLocation for use in describe() but also disp()
-# 2022-10-17 - Updated for FMU-explore 0.9.5 with disp() that do not include extra parameters with parLocation
-# 2023-02-09 - Updated to FMU-explore 0.9.6e
+# 2022-08-18 - Updated for BPL ver 2.1.0 beta and FMU-explore 0.9.2
+# 2022-09-08 - Updated FMU-explore 0.9.3
+# 2022-10-06 - Updated for FMU-explore 0.9.5 with disp() that do not include extra parameters with parLocation
 # 2023-02-13 - Consolidate FMU-explore to 0.9.6 and means parCheck and par() udpate and simu() with opts as arg
-# 2023-02-24 - Corrected MSL-suage information for OpenModelica Linux
-# 2023-03-27 - Update to FMU-explore 0.9.7 for PyFMI mature version
-# 2023-04-19 - Compiled for Ubuntu 20.04 and changed BPL_version
-# 2023-05-31 - Adjusted to from importlib.meetadata import version
-# 2023-09-11 - Updated to FMU-explore 0.9.8 and introduced proces diagram
+# 2023-02-22 - Updated to FMU-explore 0.9.7-beta just to confirm no side-effects around simu('cont')
+# 2023-03-27 - Updated to FMU-explore 0.9.7-gamma to comply with script for FMPy around stateDict, simui('cont')
+# 2023-03-28 - Update FMU-explore 0.9.7
+# 2023-09-02 - Added process_diagram() plot functionality and call FMU-explore 0.9.8
+# 2023-09-08 - Updated FMU to include processDiagram.png and modified FMU-explore but keep the version number
+# 2023-09-09 - Further update of process_diagram() in FMU-explore 0.9.8
+# 2024-02-29 - Update FMU-explore 0.9.9 - now with _0 replaced with _start everywhere
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -74,7 +75,7 @@ import zipfile
 from pyfmi import load_fmu
 from pyfmi.fmi import FMUException
 from itertools import cycle
-from importlib.metadata import version  
+from importlib_metadata import version   # included in future Python 3.8
 
 # Set the environment - for Linux a JSON-file in the FMU is read
 if platform.system() == 'Linux': locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
@@ -89,8 +90,9 @@ if platform.system() == 'Windows':
    print('Windows - run FMU pre-compiled JModelica 2.14')
    flag_vendor = 'JM'
    flag_type = 'CS'
+   fmu_process_diagram ='BPL_TEST2_Batch_process_diagram_om.png'
    fmu_model ='BPL_TEST2_Batch_windows_jm_cs.fmu'        
-   model = load_fmu(fmu_model, log_level=0)  
+   model = load_fmu(fmu_model, log_level=3)  
 elif platform.system() == 'Linux':
 #   flag_vendor = input('Linux - run FMU from JModelica (JM) or OpenModelica (OM)?')  
 #   flag_type = input('Linux - run FMU-CS (CS) or ME (ME)?')  
@@ -133,13 +135,10 @@ elif flag_vendor in ['OM', 'om']:
    BPL_version = 'Bioprocess Library version 2.1.1' 
 else:    
    print('There is no FMU for this platform')
-   
+
 # Simulation time
 global simulationTime; simulationTime = 5.0
 global prevFinalTime; prevFinalTime = 0
-
-# Provide process diagram on disk
-fmu_process_diagram ='BPL_GUI_TEST2_Batch_process_diagram_om.png'
 
 # Dictionary of time discrete states
 timeDiscreteStates = {} 
@@ -158,18 +157,18 @@ stateDict.update(timeDiscreteStates)
 
 # Create dictionaries parDict[] and parLocation[]
 global parDict; parDict = {}
-parDict['V_0'] = 1.0
-parDict['VX_0'] = 1.0
-parDict['VS_0'] = 10.0
+parDict['V_start'] = 1.0
+parDict['VX_start'] = 1.0
+parDict['VS_start'] = 10.0
 
 parDict['Y'] = 0.5
 parDict['qSmax'] = 1.0
 parDict['Ks'] = 0.1
 
 global parLocation; parLocation = {}
-parLocation['V_0'] = 'bioreactor.V_0'
-parLocation['VX_0'] = 'bioreactor.m_0[1]' 
-parLocation['VS_0'] = 'bioreactor.m_0[2]' 
+parLocation['V_start'] = 'bioreactor.V_start'
+parLocation['VX_start'] = 'bioreactor.m_start[1]' 
+parLocation['VS_start'] = 'bioreactor.m_start[2]' 
 
 parLocation['Y'] = 'bioreactor.culture.Y'
 parLocation['qSmax'] = 'bioreactor.culture.qSmax'
@@ -178,14 +177,14 @@ parLocation['Ks'] = 'bioreactor.culture.Ks'
 # Extra only for describe()
 parLocation['mu'] = 'bioreactor.culture.mu'
 
-# Parameter value check - especially for hysteresis to avoid runtime error
+# Parameter value check 
 global parCheck; parCheck = []
 parCheck.append("parDict['Y'] > 0")
 parCheck.append("parDict['qSmax'] > 0")
 parCheck.append("parDict['Ks'] > 0")
-parCheck.append("parDict['V_0'] > 0")
-parCheck.append("parDict['VX_0'] >= 0")
-parCheck.append("parDict['VS_0'] >= 0")
+parCheck.append("parDict['V_start'] > 0")
+parCheck.append("parDict['VX_start'] >= 0")
+parCheck.append("parDict['VS_start'] >= 0")
 
 # Create list of diagrams to be plotted by simu()
 global diagrams
@@ -281,7 +280,7 @@ def describe(name, decimals=3):
       
 #------------------------------------------------------------------------------------------------------------------
 #  General code 
-FMU_explore = 'FMU-explore version 0.9.8'
+FMU_explore = 'FMU-explore version 0.9.9'
 #------------------------------------------------------------------------------------------------------------------
 
 # Define function par() for parameter update
@@ -303,12 +302,12 @@ def par(parDict=parDict, parCheck=parCheck, parLocation=parLocation, *x, **x_kwa
 
 # Define function init() for initial values update
 def init(parDict=parDict, *x, **x_kwarg):
-   """ Set initial values and the name should contain string '_0' to be accepted.
+   """ Set initial values and the name should contain string '_start' to be accepted.
        The function can handle general parameter string location names if entered as a dictionary. """
    x_kwarg.update(*x)
    x_init={}
    for key in x_kwarg.keys():
-      if '_0' in key: 
+      if '_start' in key: 
          x_init.update({key: x_kwarg[key]})
       else:
          print('Error:', key, '- seems not an initial value, use par() instead - check the spelling')
@@ -371,8 +370,10 @@ def show(diagrams=diagrams):
    for command in diagrams: eval(command)
 
 # Simulation
-def simu(simulationTimeLocal=simulationTime, mode='Initial', options=opts_std, diagrams=diagrams):         
-   """Model loaded and given intial values and parameter before, and plot window also setup before."""
+def simu(simulationTimeLocal=simulationTime, mode='Initial', options=opts_std, \
+         diagrams=diagrams,timeDiscreteStates=timeDiscreteStates):         
+   """Model loaded and given intial values and parameter before,
+      and plot window also setup before."""
     
    # Global variables
    global model, parDict, stateDict, prevFinalTime, simulationTime, sim_res, t
@@ -417,17 +418,17 @@ def simu(simulationTimeLocal=simulationTime, mode='Initial', options=opts_std, d
          for key in stateDict.keys():
             if not key[-1] == ']':
                if key[-3:] == 'I.y': 
-                  model.set(key[:-10]+'I_0', stateDict[key]) 
+                  model.set(key[:-10]+'I_start', stateDict[key]) 
                elif key[-3:] == 'D.x': 
-                  model.set(key[:-10]+'D_0', stateDict[key]) 
+                  model.set(key[:-10]+'D_start', stateDict[key]) 
                else:
-                  model.set(key+'_0', stateDict[key])
+                  model.set(key+'_start', stateDict[key])
             elif key[-3] == '[':
-               model.set(key[:-3]+'_0'+key[-3:], stateDict[key]) 
+               model.set(key[:-3]+'_start'+key[-3:], stateDict[key]) 
             elif key[-4] == '[':
-               model.set(key[:-4]+'_0'+key[-4:], stateDict[key]) 
+               model.set(key[:-4]+'_start'+key[-4:], stateDict[key]) 
             elif key[-5] == '[':
-               model.set(key[:-5]+'_0'+key[-5:], stateDict[key]) 
+               model.set(key[:-5]+'_start'+key[-5:], stateDict[key]) 
             else:
                print('The state vecotr has more than 1000 states')
                break
@@ -529,7 +530,7 @@ def describe_general(name, decimals):
             print(description, ':', value)     
       else:
          print(description, ':', np.round(value, decimals), '[',unit,']')
-
+         
 # Plot process diagram
 def process_diagram(fmu_model=fmu_model, fmu_process_diagram=fmu_process_diagram):   
    try:
@@ -583,7 +584,7 @@ def system_info():
    print(' -MSL:', MSL_version)    
    print(' -Description:', BPL_version)   
    print(' -Interaction:', FMU_explore)
-
+   
 #------------------------------------------------------------------------------------------------------------------
 #  Startup
 #------------------------------------------------------------------------------------------------------------------
