@@ -146,7 +146,7 @@ timeDiscreteStates = {}
 # Define a minimal compoent list of the model as a starting point for describe('parts')
 component_list_minimum = ['bioreactor', 'bioreactor.culture']
 
-# Process diagram
+# Process diagram on disk
 fmu_process_diagram ='BPL_TEST2_Batch_process_diagram_om.png'
 
 #------------------------------------------------------------------------------------------------------------------
