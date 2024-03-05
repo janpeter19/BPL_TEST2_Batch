@@ -90,7 +90,6 @@ if platform.system() == 'Windows':
    print('Windows - run FMU pre-compiled JModelica 2.14')
    flag_vendor = 'JM'
    flag_type = 'CS'
-   fmu_process_diagram ='BPL_TEST2_Batch_process_diagram_om.png'
    fmu_model ='BPL_TEST2_Batch_windows_jm_cs.fmu'        
    model = load_fmu(fmu_model, log_level=3)  
 elif platform.system() == 'Linux':
@@ -145,6 +144,9 @@ timeDiscreteStates = {}
 
 # Define a minimal compoent list of the model as a starting point for describe('parts')
 component_list_minimum = ['bioreactor', 'bioreactor.culture']
+
+# Process diagram
+fmu_process_diagram ='BPL_TEST2_Batch_process_diagram_om.png'
 
 #------------------------------------------------------------------------------------------------------------------
 #  Specific application constructs: stateDict, parDict, diagrams, newplot(), describe()
