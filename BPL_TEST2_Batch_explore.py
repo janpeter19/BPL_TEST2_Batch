@@ -58,7 +58,8 @@
 # 2023-09-08 - Updated FMU to include processDiagram.png and modified FMU-explore but keep the version number
 # 2023-09-09 - Further update of process_diagram() in FMU-explore 0.9.8
 # 2024-02-29 - Update FMU-explore 0.9.9 - now with _0 replaced with _start everywhere
-#------------------------------------------------------------------------------------------------------------------
+# 2024-03-05 - Moved process diagram to common place for both Windows and Linux and update Linux BPL 2.1.2 prel
+#---------------------------------------------------------------------------------- --------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
 #  Framework
@@ -131,7 +132,7 @@ if flag_vendor in ['JM', 'jm']:
 elif flag_vendor in ['OM', 'om']:
    MSL_usage = '3.2.3 - used components: none' 
    MSL_version = '3.2.3'
-   BPL_version = 'Bioprocess Library version 2.1.1' 
+   BPL_version = 'Bioprocess Library version 2.1.2 prel' 
 else:    
    print('There is no FMU for this platform')
 
