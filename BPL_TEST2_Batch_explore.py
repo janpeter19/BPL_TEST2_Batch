@@ -59,6 +59,7 @@
 # 2023-09-09 - Further update of process_diagram() in FMU-explore 0.9.8
 # 2024-02-29 - Update FMU-explore 0.9.9 - now with _0 replaced with _start everywhere
 # 2024-03-05 - Moved process diagram to common place for both Windows and Linux and update Linux BPL 2.1.2 prel
+# 2024-05-12 - Polish the scirpt
 #---------------------------------------------------------------------------------- --------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -73,8 +74,10 @@ import numpy as np
 import matplotlib.pyplot as plt 
 import matplotlib.image as img
 import zipfile
+
 from pyfmi import load_fmu
 from pyfmi.fmi import FMUException
+
 from itertools import cycle
 from importlib_metadata import version   # included in future Python 3.8
 
@@ -92,7 +95,7 @@ if platform.system() == 'Windows':
    flag_vendor = 'JM'
    flag_type = 'CS'
    fmu_model ='BPL_TEST2_Batch_windows_jm_cs.fmu'        
-   model = load_fmu(fmu_model, log_level=3)  
+   model = load_fmu(fmu_model, log_level=0)  
 elif platform.system() == 'Linux':
 #   flag_vendor = input('Linux - run FMU from JModelica (JM) or OpenModelica (OM)?')  
 #   flag_type = input('Linux - run FMU-CS (CS) or ME (ME)?')  
@@ -100,13 +103,13 @@ elif platform.system() == 'Linux':
    flag_vendor = 'OM'
    flag_type = 'ME'
    if flag_vendor in ['OM','om']:
-      print('Linux - run FMU pre-comiled OpenModelica 1.21.0') 
+      print('Linux - run FMU pre-comiled OpenModelica 1.22.4') 
       if flag_type in ['CS','cs']:         
          fmu_model ='BPL_TEST2_Batch_linux_om_cs.fmu'    
-         model = load_fmu(fmu_model, log_level=4) 
+         model = load_fmu(fmu_model, log_level=0) 
       if flag_type in ['ME','me']:         
          fmu_model ='BPL_TEST2_Batch_linux_om_me.fmu' 
-         model = load_fmu(fmu_model, log_level=4)
+         model = load_fmu(fmu_model, log_level=0)
    else:    
       print('There is no FMU for this platform')
 
@@ -132,7 +135,7 @@ if flag_vendor in ['JM', 'jm']:
 elif flag_vendor in ['OM', 'om']:
    MSL_usage = '3.2.3 - used components: none' 
    MSL_version = '3.2.3'
-   BPL_version = 'Bioprocess Library version 2.1.2 prel' 
+   BPL_version = 'Bioprocess Library version 2.2.0' 
 else:    
    print('There is no FMU for this platform')
 
@@ -283,7 +286,7 @@ def describe(name, decimals=3):
       
 #------------------------------------------------------------------------------------------------------------------
 #  General code 
-FMU_explore = 'FMU-explore version 0.9.9'
+FMU_explore = 'FMU-explore version 1.0.0'
 #------------------------------------------------------------------------------------------------------------------
 
 # Define function par() for parameter update
