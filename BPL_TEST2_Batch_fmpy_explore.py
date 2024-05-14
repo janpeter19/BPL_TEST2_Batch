@@ -332,7 +332,7 @@ def describe(name, decimals=3):
       describe_general(name, decimals)
 #------------------------------------------------------------------------------------------------------------------
 #  General code 
-FMU_explore = 'FMU-explore for FMPy version 0.9.9'
+FMU_explore = 'FMU-explore for FMPy version 1.0.0'
 #------------------------------------------------------------------------------------------------------------------
 
 # Define function par() for parameter update
