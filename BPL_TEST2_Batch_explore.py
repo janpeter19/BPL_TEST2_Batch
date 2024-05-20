@@ -60,6 +60,7 @@
 # 2024-02-29 - Update FMU-explore 0.9.9 - now with _0 replaced with _start everywhere
 # 2024-03-05 - Moved process diagram to common place for both Windows and Linux and update Linux BPL 2.1.2 prel
 # 2024-05-12 - Polish the scirpt
+# 2024-05-20 - Updated the OpenModelica version to 1.23.0-dev
 #---------------------------------------------------------------------------------- --------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -103,7 +104,7 @@ elif platform.system() == 'Linux':
    flag_vendor = 'OM'
    flag_type = 'ME'
    if flag_vendor in ['OM','om']:
-      print('Linux - run FMU pre-comiled OpenModelica 1.22.4') 
+      print('Linux - run FMU pre-compiled OpenModelica 1.23.0-dev') 
       if flag_type in ['CS','cs']:         
          fmu_model ='BPL_TEST2_Batch_linux_om_cs.fmu'    
          model = load_fmu(fmu_model, log_level=0) 
