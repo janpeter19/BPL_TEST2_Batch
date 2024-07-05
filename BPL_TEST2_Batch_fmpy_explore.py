@@ -32,6 +32,7 @@
 # 2024-05-14 - Polish the script
 # 2024-05-20 - Updated the OpenModelica version to 1.23.0-dev
 # 2024-06-01 - Corrected model_get() to handle string values as well - improvement very small and keep ver 1.0.0
+# 2024-07-05 - Took away initial ver of OpenModelica since shown in system_info()
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -70,7 +71,7 @@ if platform.system() == 'Windows':
    flag_vendor = 'JM' 
    flag_type = 'CS'
 elif platform.system() == 'Linux':
-   print('Linux - run FMU pre-compiled OpenModelica 1.23.0-dev')
+   print('Linux - run FMU pre-compiled OpenModelica')
    fmu_model ='BPL_TEST2_Batch_linux_om_me.fmu'  
    model_description = read_model_description(fmu_model)  
    flag_vendor = 'OM' 
@@ -102,7 +103,7 @@ if flag_vendor in ['JM', 'jm']:
 elif flag_vendor in ['OM', 'om']:
    MSL_usage = '3.2.3 - used components: none' 
    MSL_version = '3.2.3'
-   BPL_version = 'Bioprocess Library version 2.2.0' 
+   BPL_version = 'Bioprocess Library version 2.2.1 - GUI' 
 else:    
    print('There is no FMU for this platform')
 
