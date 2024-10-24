@@ -34,6 +34,7 @@
 # 2024-06-01 - Corrected model_get() to handle string values as well - improvement very small and keep ver 1.0.0
 # 2024-07-05 - Took away initial ver of OpenModelica since shown in system_info()
 # 2024-08-13 - Corrected model_get() to handle calculatedParameters - call it ver 1.0.1
+# 2024-10-24 - Update BPL 2.2.2 - GUI
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -104,7 +105,7 @@ if flag_vendor in ['JM', 'jm']:
 elif flag_vendor in ['OM', 'om']:
    MSL_usage = '3.2.3 - used components: none' 
    MSL_version = '3.2.3'
-   BPL_version = 'Bioprocess Library version 2.2.1 - GUI' 
+   BPL_version = 'Bioprocess Library version 2.2.2 - GUI' 
 else:    
    print('There is no FMU for this platform')
 
