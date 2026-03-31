@@ -71,6 +71,7 @@
 # 2025-11-14 - FMU-explore 1.0.2 corrected
 # 2025-11-19 - FMU-explore 1.0.2 corrected again parLocation() with sheets as argument
 # 2026-03-30 - FMU-explore 1.0.3
+# 2026-03-31 - Changed back to FMU for Ubuntu 22-04 which I should have made long time ago and forgotten
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -116,7 +117,7 @@ elif platform.system() == 'Linux':
          model = load_fmu(fmu_model, log_level=0) 
       if flag_type in ['ME','me']:   
 #        fmu_model ='BPL_TEST2_Batch_linux_om_me.fmu'       
-         fmu_model ='BPL_TEST2_Batch_linux_2404_om_me.fmu' 
+         fmu_model ='BPL_TEST2_Batch_linux_om_me.fmu' 
          model = load_fmu(fmu_model, log_level=0)
    else:    
       print('There is no FMU for this platform')
