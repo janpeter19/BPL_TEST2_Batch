@@ -72,6 +72,7 @@
 # 2025-11-19 - FMU-explore 1.0.2 corrected again parLocation() with sheets as argument
 # 2026-03-30 - FMU-explore 1.0.3
 # 2026-03-31 - Changed back to FMU for Ubuntu 22-04 which I should have made long time ago and forgotten
+# 2026-04-09 - Update BPL 2.3.2
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
