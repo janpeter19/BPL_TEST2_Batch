@@ -116,8 +116,7 @@ elif platform.system() == 'Linux':
       if flag_type in ['CS','cs']:         
          fmu_model ='BPL_TEST2_Batch_linux_om_cs.fmu'    
          model = load_fmu(fmu_model, log_level=0) 
-      if flag_type in ['ME','me']:   
-#        fmu_model ='BPL_TEST2_Batch_linux_om_me.fmu'       
+      if flag_type in ['ME','me']:      
          fmu_model ='BPL_TEST2_Batch_linux_om_me.fmu' 
          model = load_fmu(fmu_model, log_level=0)
    else:    
@@ -145,7 +144,7 @@ if flag_vendor in ['JM', 'jm']:
 elif flag_vendor in ['OM', 'om']:
    MSL_usage = '4.1.0 - used components: none' 
    MSL_version = '4.1.0'
-   BPL_version = 'Bioprocess Library version 2.3.1' 
+   BPL_version = 'Bioprocess Library version 2.3.2' 
 else:    
    print('There is no FMU for this platform')
 
