@@ -2,6 +2,7 @@
 # Author: Jan Peter Axelsson
 #------------------------------------------------------------------------------------------------------------------
 # 2026-09-02 - Created
+# 2026-09-09 - Drop global prevFinalTime and let it be just interal to fmu_explore_fmpy
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -70,7 +71,6 @@ else:
 
 # Simulation time
 simulationTime = 5.0
-prevFinalTime = 0
 
 # Dictionary of time discrete states
 timeDiscreteStates = {} 

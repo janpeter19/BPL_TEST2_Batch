@@ -5,6 +5,7 @@
 # 2026-08-17 - Added variables for simu() and diagrams
 # 2026-08-19 - Polished, take away ax1 and axx2 here
 # 2026-08-20 - Defined just the lines for the pen in the diagrams and sim_res kept as global in the modiule
+# 2026-09-09 - Drop global prevFinalTime and let it be just interal to fmu_explore_pyfmi
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -75,7 +76,6 @@ else:
 
 # Simulation time
 simulationTime = 5.0
-prevFinalTime = 0
 
 # Dictionary of time discrete states
 timeDiscreteStates = {} 
