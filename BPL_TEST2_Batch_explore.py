@@ -6,7 +6,7 @@
 # 2026-08-13 - Building fmu_eplore_pyfmi for the "new" class-based approach
 # 2026-08-14 - Transfer states and diagrams list
 # 2026-08-19 - Deal with ax1, ax2 etc - made a list ax of them and included in the class module
-# 2026-08-20 - Changed setLines() to resetPen() and let tye itertools be used in the module only
+# 2026-08-20 - Changed setLines() to resetPen() and let the itertools be used in the module only
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
