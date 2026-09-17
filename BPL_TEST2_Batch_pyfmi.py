@@ -7,6 +7,7 @@
 # 2026-08-20 - Defined just the lines for the pen in the diagrams and sim_res kept as global in the modiule
 # 2026-09-09 - Drop global prevFinalTime and let it be just interal to fmu_explore_pyfmi
 # 2026-09-14 - Move definition of stateValue to the fmu_explore_pyfmi module ver 1.2.0
+# 2026-09-17 - Decrease the framework to what is necessary and move matlotlib to the other setup-file
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -14,11 +15,8 @@
 #------------------------------------------------------------------------------------------------------------------
 
 # Setup framework
-import sys
 import platform
 import locale
-import numpy as np 
-import matplotlib.pyplot as plt 
 from pyfmi import load_fmu
 
 # Set the environment - for Linux a JSON-file in the FMU is read

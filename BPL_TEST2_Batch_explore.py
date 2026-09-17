@@ -1,13 +1,18 @@
-# Figure - Simulation of batch reactor 
-#          with functions added to facilitate explorative simulation work
-#
+# Setup application functions BPL_TEST2_Batch, dependent on previous import of functions from fmu_explore 
 # Author: Jan Peter Axelsson
 #------------------------------------------------------------------------------------------------------------------
 # 2026-08-13 - Building fmu_eplore_pyfmi for the "new" class-based approach
 # 2026-08-14 - Transfer states and diagrams list
 # 2026-08-19 - Deal with ax1, ax2 etc - made a list ax of them and included in the class module
 # 2026-08-20 - Changed setLines() to resetPen() and let the itertools be used in the module only
+# 2026-09-17 - Bring in matplotlib.pylot since used here
 #------------------------------------------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------------------------------------------
+#  Framework
+#------------------------------------------------------------------------------------------------------------------
+
+import matplotlib.pyplot as plt 
 
 #------------------------------------------------------------------------------------------------------------------
 #  Specific application constructs: stateValue, parValue, parLocation, parCheck, diagrams, newplot(), describe()
