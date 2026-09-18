@@ -15,7 +15,7 @@
 import matplotlib.pyplot as plt 
 
 #------------------------------------------------------------------------------------------------------------------
-#  Specific application constructs: stateValue, parValue, parLocation, parCheck, diagrams, newplot(), describe()
+#  Specific application constructs:  newplot(), describe()
 #------------------------------------------------------------------------------------------------------------------
 
 # Define standard diagrams
