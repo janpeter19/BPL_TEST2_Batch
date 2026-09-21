@@ -8,6 +8,7 @@
 # 2026-09-09 - Drop global prevFinalTime and let it be just interal to fmu_explore_pyfmi
 # 2026-09-14 - Move definition of stateValue to the fmu_explore_pyfmi module ver 1.2.0
 # 2026-09-17 - Decrease the framework to what is necessary and move matlotlib to the other setup-file
+# 2026-09-21 - Change indentaiton from 3 spaces to 4
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -20,7 +21,8 @@ import locale
 from pyfmi import load_fmu
 
 # Set the environment - for Linux a JSON-file in the FMU is read
-if platform.system() == 'Linux': locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+if platform.system() == 'Linux': 
+   locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 #------------------------------------------------------------------------------------------------------------------
 #  Setup application FMU
@@ -28,50 +30,50 @@ if platform.system() == 'Linux': locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 # Provde the right FMU and load for different platforms in user dialogue:
 if platform.system() == 'Windows':
-   print('Windows - run FMU pre-compiled JModelica 2.14')
-   flag_vendor = 'JM'
-   flag_type = 'CS'
-   fmu_model ='BPL_TEST2_Batch_windows_jm_cs.fmu'        
-   model = load_fmu(fmu_model, log_level=0)  
+    print('Windows - run FMU pre-compiled JModelica 2.14')
+    flag_vendor = 'JM'
+    flag_type = 'CS'
+    fmu_model ='BPL_TEST2_Batch_windows_jm_cs.fmu'
+    model = load_fmu(fmu_model, log_level=0)
 elif platform.system() == 'Linux':
-   flag_vendor = 'OM'
-   flag_type = 'ME'
-   if flag_vendor in ['OM','om']:
-      print('Linux - run FMU pre-compiled OpenModelica') 
-      if flag_type in ['CS','cs']:         
-         fmu_model ='BPL_TEST2_Batch_linux_om_cs.fmu'    
-         model = load_fmu(fmu_model, log_level=0) 
-      if flag_type in ['ME','me']:      
-         fmu_model ='BPL_TEST2_Batch_linux_om_me.fmu' 
-         model = load_fmu(fmu_model, log_level=0)
-   else:    
-      print('There is no FMU for this platform')
+    flag_vendor = 'OM'
+    flag_type = 'ME'
+    if flag_vendor in ['OM','om']:
+        print('Linux - run FMU pre-compiled OpenModelica')
+        if flag_type in ['CS','cs']:
+            fmu_model ='BPL_TEST2_Batch_linux_om_cs.fmu'
+            model = load_fmu(fmu_model, log_level=0)
+        if flag_type in ['ME','me']:
+            fmu_model ='BPL_TEST2_Batch_linux_om_me.fmu'
+            model = load_fmu(fmu_model, log_level=0)
+    else:
+        print('There is no FMU for this platform')
 
 # Provide various opts-profiles
 if flag_type in ['CS', 'cs']:
-   opts_std = model.simulate_options()
-   opts_std['silent_mode'] = True
-   opts_std['ncp'] = 500 
-   opts_std['result_handling'] = 'binary'     
+    opts_std = model.simulate_options()
+    opts_std['silent_mode'] = True
+    opts_std['ncp'] = 500
+    opts_std['result_handling'] = 'binary'
 elif flag_type in ['ME', 'me']:
-   opts_std = model.simulate_options()
-   opts_std["CVode_options"]["verbosity"] = 50 
-   opts_std['ncp'] = 500 
-   opts_std['result_handling'] = 'binary'  
+    opts_std = model.simulate_options()
+    opts_std["CVode_options"]["verbosity"] = 50
+    opts_std['ncp'] = 500
+    opts_std['result_handling'] = 'binary'
 else:    
-   print('There is no FMU for this platform')
+    print('There is no FMU for this platform')
   
 # Provide various MSL and BPL versions
 if flag_vendor in ['JM', 'jm']:
-   MSL_usage = model.get('MSL.usage')[0]
-   MSL_version = model.get('MSL.version')[0]
-   BPL_version = model.get('BPL.version')[0]
+    MSL_usage = model.get('MSL.usage')[0]
+    MSL_version = model.get('MSL.version')[0]
+    BPL_version = model.get('BPL.version')[0]
 elif flag_vendor in ['OM', 'om']:
-   MSL_usage = '4.1.0 - used components: none' 
-   MSL_version = '4.1.0'
-   BPL_version = 'Bioprocess Library version 2.3.2' 
+    MSL_usage = '4.1.0 - used components: none'
+    MSL_version = '4.1.0'
+    BPL_version = 'Bioprocess Library version 2.3.2'
 else:    
-   print('There is no FMU for this platform')
+    print('There is no FMU for this platform')
 
 # Simulation time
 simulationTime = 5.0
@@ -99,8 +101,8 @@ parValue['Ks'] = 0.1
 
 parLocation = {}
 parLocation['V_start'] = 'bioreactor.V_start'
-parLocation['VX_start'] = 'bioreactor.m_start[1]' 
-parLocation['VS_start'] = 'bioreactor.m_start[2]' 
+parLocation['VX_start'] = 'bioreactor.m_start[1]'
+parLocation['VS_start'] = 'bioreactor.m_start[2]'
 
 parLocation['Y'] = 'bioreactor.culture.Y'
 parLocation['qSmax'] = 'bioreactor.culture.qSmax'

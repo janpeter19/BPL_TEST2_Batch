@@ -4,6 +4,7 @@
 # 2026-09-02 - Created
 # 2026-09-09 - Drop global prevFinalTime and let it be just interal to fmu_explore_fmpy
 # 2026-09-17 - Decrease the framework to what is necessary and move matlotlib to the other setup-file
+# 2026-09-21 - Change indentaiton from 3 spaces to 4
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -25,27 +26,27 @@ if platform.system() == 'Linux': locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 # Provde the right FMU and load for different platforms in user dialogue:
 if platform.system() == 'Windows':
-   print('Windows - run FMU pre-compiled JModelica 2.14')
-   fmu_model ='BPL_TEST2_Batch_windows_jm_cs.fmu'
-   model_description = read_model_description(fmu_model)        
-   flag_vendor = 'JM' 
-   flag_type = 'CS'
+    print('Windows - run FMU pre-compiled JModelica 2.14')
+    fmu_model ='BPL_TEST2_Batch_windows_jm_cs.fmu'
+    model_description = read_model_description(fmu_model)
+    flag_vendor = 'JM' 
+    flag_type = 'CS'
 elif platform.system() == 'Linux':
-   print('Linux - run FMU pre-compiled OpenModelica')
-   fmu_model ='BPL_TEST2_Batch_linux_om_me.fmu'  
-   model_description = read_model_description(fmu_model)  
-   flag_vendor = 'OM' 
-   flag_type = 'ME'
-else:    
-   print('There is no FMU for this platform')
+    print('Linux - run FMU pre-compiled OpenModelica')
+    fmu_model ='BPL_TEST2_Batch_linux_om_me.fmu'
+    model_description = read_model_description(fmu_model)
+    flag_vendor = 'OM' 
+    flag_type = 'ME'
+else:
+    print('There is no FMU for this platform')
 
 # Provide various opts-profiles
 if flag_type in ['CS', 'cs']:
-   opts_std = {'NCP': 500}
+    opts_std = {'NCP': 500}
 elif flag_type in ['ME', 'me']:
-   opts_std = {'NCP': 500}
-else:    
-   print('There is no FMU for this platform')
+    opts_std = {'NCP': 500}
+else:
+    print('There is no FMU for this platform')
 
 # Extract model_description from fmu_model
 model_description = read_model_description(fmu_model)
@@ -53,19 +54,19 @@ model_description = read_model_description(fmu_model)
 # Provide various MSL and BPL versions
 if flag_vendor in ['JM', 'jm']:
 #   MSL_usage = model.get('MSL.usage')[0]
-   constants = [v for v in model_description.modelVariables if v.causality == 'local'] 
-   MSL_usage = [x[1] for 
-      x in [(constants[k].name, constants[k].start) for k in range(len(constants))] if 'MSL.usage' in x[0]][0]   
-   MSL_version = [x[1] for 
-      x in [(constants[k].name, constants[k].start) for k in range(len(constants))] if 'MSL.version' in x[0]][0]
-   BPL_version = [x[1] for 
-      x in [(constants[k].name, constants[k].start) for k in range(len(constants))] if 'BPL.version' in x[0]][0] 
+    constants = [v for v in model_description.modelVariables if v.causality == 'local'] 
+    MSL_usage = [x[1] for 
+        x in [(constants[k].name, constants[k].start) for k in range(len(constants))] if 'MSL.usage' in x[0]][0]   
+    MSL_version = [x[1] for 
+        x in [(constants[k].name, constants[k].start) for k in range(len(constants))] if 'MSL.version' in x[0]][0]
+    BPL_version = [x[1] for 
+        x in [(constants[k].name, constants[k].start) for k in range(len(constants))] if 'BPL.version' in x[0]][0] 
 elif flag_vendor in ['OM', 'om']:
-   MSL_usage = '4.1.0 - used components: none' 
-   MSL_version = '4.1.0'
-   BPL_version = 'Bioprocess Library version 2.3.2' 
+    MSL_usage = '4.1.0 - used components: none' 
+    MSL_version = '4.1.0'
+    BPL_version = 'Bioprocess Library version 2.3.2' 
 else:    
-   print('There is no FMU for this platform')
+    print('There is no FMU for this platform')
 
 # Simulation time
 simulationTime = 5.0
