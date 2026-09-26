@@ -38,19 +38,10 @@ elif platform.system() == 'Linux':
     else:
         print('There is no FMU for this platform')
 
-# Provide various opts-profiles
-if flag_type in ['CS', 'cs']:
-#    opts_std = model.simulate_options()
-    opts_std['silent_mode'] = True
-    opts_std['ncp'] = 500
-    opts_std['result_handling'] = 'binary'
-elif flag_type in ['ME', 'me']:
-#    opts_std = model.simulate_options()
-    opts_std["CVode_options"]["verbosity"] = 50
-    opts_std['ncp'] = 500
-    opts_std['result_handling'] = 'binary'
-else:    
-    print('There is no FMU for this platform')
+
+opts_std = None
+
+
   
 # Provide various MSL and BPL versions
 if flag_vendor in ['JM', 'jm']:
