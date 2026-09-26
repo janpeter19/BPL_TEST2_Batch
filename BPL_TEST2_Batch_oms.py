@@ -25,7 +25,7 @@ if platform.system() == 'Windows':
     print('Windows - run FMU pre-compiled JModelica 2.14')
     flag_vendor = 'JM'
     flag_type = 'CS'
-    fmu_model ='BPL_TEST2_Batch_windows_jm_cs.fmu'
+#    fmu_model ='BPL_TEST2_Batch_windows_jm_cs.fmu'
 elif platform.system() == 'Linux':
     flag_vendor = 'OM'
     flag_type = 'ME'
