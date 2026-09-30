@@ -47,10 +47,10 @@ def newplot(title='Batch cultivation', plotType='TimeSeries'):
       
         # List of commands to be executed by simu() after a simulation  
         diagrams.clear()
-        diagrams.append("ax[0].plot(t, mat_data['data_2'][2], color='r',linestyle=linetype)")
-        diagrams.append("ax[0].plot(t, mat_data['data_2'][3], color='b',linestyle=linetype)")   
+        diagrams.append("ax[0].plot(t, sim_res['data_2'][2], color='r',linestyle=linetype)")
+        diagrams.append("ax[0].plot(t, sim_res['data_2'][3], color='b',linestyle=linetype)")   
         diagrams.append("ax[0].legend(['X','S'])")   
-        diagrams.append("ax[1].plot(t, mat_data['data_2'][12], color='r',linestyle=linetype)")   
+        diagrams.append("ax[1].plot(t, sim_res['data_2'][12], color='r',linestyle=linetype)")   
 
     elif plotType == 'PhasePlane':
        
