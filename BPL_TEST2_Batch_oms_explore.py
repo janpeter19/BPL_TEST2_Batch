@@ -78,8 +78,10 @@ def describe(name, decimals=3):
 
     if name == 'culture':
         print('Simplified text book model - only substrate S and cell concentration X')
+
     elif name in ['MSL']:
         describe_MSL()
+
     else:
         dummy = decimals
         #describe_general(name, decimals)
