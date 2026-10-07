@@ -83,7 +83,7 @@ def describe(name, decimals=3):
         describe_MSL()
 
     else:
-        Aoolication.describe_general(name, decimals)
+        Application.describe_general(name, decimals)
 
 #------------------------------------------------------------------------------------------------------------------
 #  Startup
