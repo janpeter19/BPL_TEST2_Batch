@@ -83,8 +83,7 @@ def describe(name, decimals=3):
         describe_MSL()
 
     else:
-        dummy = decimals
-        #describe_general(name, decimals)
+        dummy = decimals #describe_general(name, decimals)
 
 #------------------------------------------------------------------------------------------------------------------
 #  Startup
