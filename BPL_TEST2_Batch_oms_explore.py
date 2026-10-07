@@ -81,7 +81,7 @@ def describe(name, decimals=3):
     elif name in ['MSL']:
         describe_MSL()
     else:
-        None
+        dummy = decimals
         #describe_general(name, decimals)
 
 #------------------------------------------------------------------------------------------------------------------
