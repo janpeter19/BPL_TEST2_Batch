@@ -2,7 +2,8 @@
 # Author: Jan Peter Axelsson
 #------------------------------------------------------------------------------------------------------------------
 # 2026-02-24 - Created
-# 2026-09-29 - Import for oms relatted handling
+# 2026-09-29 - Import for oms related handling
+# 2026-10-07 - Diagrams modified for DyMat
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -47,10 +48,10 @@ def newplot(title='Batch cultivation', plotType='TimeSeries'):
       
         # List of commands to be executed by simu() after a simulation  
         diagrams.clear()
-        diagrams.append("ax[0].plot(t, sim_res['data_2'][2], color='r',linestyle=linetype)")
-        diagrams.append("ax[0].plot(t, sim_res['data_2'][3], color='b',linestyle=linetype)")   
+        diagrams.append("ax[0].plot(t, sim_res['Batch.bioreactor.c[1]'], color='r',linestyle=linetype)")
+        diagrams.append("ax[0].plot(t, sim_res['Batch.bioreactor.c[2]'], color='b',linestyle=linetype)")   
         diagrams.append("ax[0].legend(['X','S'])")   
-        diagrams.append("ax[1].plot(t, sim_res['data_2'][12], color='r',linestyle=linetype)")   
+        diagrams.append("ax[1].plot(t, sim_res['Batch.bioreactor.culture.q[1]'], color='r',linestyle=linetype)")   
 
     elif plotType == 'PhasePlane':
        
@@ -64,8 +65,9 @@ def newplot(title='Batch cultivation', plotType='TimeSeries'):
 
         # List of commands to be executed by simu() after a simulation         
         diagrams.clear()
-        diagrams.append("ax[0].plot(mat_data['data_2'][2], mat_data['data_2'][3], color='b', linestyle=linetype)")
-             
+        diagrams.append("ax[0].plot(sim_res['Batch.bioreactor.c[1]'], sim_res['Batch.bioreactor.c[2]'], \
+                         color='b', linestyle=linetype)")
+
     else:
         print("Plot window type not correct")
 
