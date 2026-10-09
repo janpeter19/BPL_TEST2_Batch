@@ -3,6 +3,7 @@
 #------------------------------------------------------------------------------------------------------------------
 # 2026-09-24 - Created
 # 2026-10-06 - Added parameter options although empty list
+# 2026-10-09 - Change to FMU  made in Ubuntu 24.04 
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -35,7 +36,8 @@ elif platform.system() == 'Linux':
         if flag_type in ['CS','cs']:
             fmu_model ='BPL_TEST2_Batch_linux_om_cs.fmu'
         if flag_type in ['ME','me']:
-            fmu_model ='BPL_TEST2_Batch_linux_om_me.fmu'
+#            fmu_model ='BPL_TEST2_Batch_linux_om_me.fmu'
+            fmu_model = 'BPL_TEST2_Batch_linux_2404_om_me.fmu'
     else:
         print('There is no FMU for this platform')
 
