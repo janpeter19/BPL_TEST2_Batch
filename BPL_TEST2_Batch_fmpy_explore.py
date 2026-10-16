@@ -116,8 +116,9 @@ FMU_explore_info()
 #  Clean-up
 #------------------------------------------------------------------------------------------------------------------
 
+del parValue, parLocation, parCheck, keyVariables
+del model_description, fmu_model, fmu_process_diagram
 del MSL_usage, MSL_version, BPL_version
+del opts_std, simulationTime, timeDiscreteStates
 del flag_type, flag_vendor
 del lines
-del opts_std
-del model_description, fmu_model, fmu_process_diagram
