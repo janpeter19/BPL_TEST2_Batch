@@ -118,7 +118,7 @@ FMU_explore_info()
 #------------------------------------------------------------------------------------------------------------------
 
 del parValue, parLocation, parCheck
-del model_description, fmu_model, fmu_process_diagram
+del model, fmu_model, fmu_process_diagram
 del MSL_usage, MSL_version, BPL_version
 del opts_std, simulationTime, timeDiscreteStates
 del flag_type, flag_vendor
