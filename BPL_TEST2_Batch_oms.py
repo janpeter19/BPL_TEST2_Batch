@@ -4,6 +4,7 @@
 # 2026-09-24 - Created
 # 2026-10-06 - Added parameter options although empty list
 # 2026-10-09 - Change to FMU  made in Ubuntu 24.04 and back to 22.04
+# 2026-11-10 - Use the dictionar timeDiscreteState temporarily to provide continuos time states and values
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -62,7 +63,7 @@ else:
 simulationTime = 5.0
 
 # Dictionary of time discrete states
-timeDiscreteStates = {} 
+timeDiscreteStates = {'bioreactor.V_start':1.0, 'bioreactor.m_start[1]':1, 'bioreactor.m_start[2]':10} 
 
 # Define a minimal compoent list of the model as a starting point for describe('parts')
 component_list_minimum = ['bioreactor', 'bioreactor.culture']
