@@ -5,6 +5,7 @@
 # 2026-10-06 - Added parameter options although empty list
 # 2026-10-09 - Change to FMU  made in Ubuntu 24.04 and back to 22.04
 # 2026-11-10 - Use the dictionar timeDiscreteState temporarily to provide continuos time states and values
+# 2026-11-13 - Just move the defintion of options
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -42,11 +43,6 @@ elif platform.system() == 'Linux':
     else:
         print('There is no FMU for this platform')
 
-
-opts_std = None
-
-
-  
 # Provide various MSL and BPL versions
 if flag_vendor in ['JM', 'jm']:
 #    MSL_usage = model.get('MSL.usage')[0]
@@ -61,6 +57,9 @@ else:
 
 # Simulation time
 simulationTime = 5.0
+
+# Options
+options = []
 
 # Dictionary of time discrete states
 timeDiscreteStates = {'bioreactor.V':1.0, 'bioreactor.m[1]':1, 'bioreactor.m[2]':10} 
@@ -115,5 +114,4 @@ ax = []
 # Create list of pens for the diagrams
 lines = ['-','--',':','-.']
 
-# Options
-options = []
+
